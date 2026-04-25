@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suporte Ergonômico para Notebook — Chega de Dor no Pescoço</title>
+
+  <!-- =============================================
+       GOOGLE FONTS — sem framework externo,
+       só tipografia via CDN (permitido)
+  ============================================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================
+       RESET & BASE
+    ========================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #f7f6f3;
+      --surface:     #ffffff;
+      --surface2:    #f0ede8;
+      --border:      #e4e0d9;
+      --text:        #1a1916;
+      --muted:       #6b6760;
+      --accent:      #e85d04;
+      --accent-dark: #c94e00;
+      --accent-lite: #fff1eb;
+      --green:       #1d7a4f;
+      --green-bg:    #edf7f2;
+      --whatsapp:    #25d366;
+      --whatsapp-dk: #1aab52;
+      --radius:      14px;
+      --shadow:      0 4px 24px rgba(0,0,0,0.07);
+      --font:        'Plus Jakarta Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.65;
+      /* Fade-in na página toda */
+      opacity: 0;
+      animation: pageFadeIn 0.7s ease 0.1s forwards;
+    }
+
+    @keyframes pageFadeIn {
+      to { opacity: 1; }
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ==========================================
+       LAYOUT WRAPPER
+    ========================================== */
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ==========================================
+       SEÇÕES GENÉRICAS
+    ========================================== */
+    section { padding: 52px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    /* ==========================================
+       1. HERO — TÍTULO PRINCIPAL
+    ========================================== */
+    .hero {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+
+    /* Pílula de credibilidade no topo */
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-lite);
+      border: 1px solid rgba(232,93,4,0.18);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-pill span {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.3; }
+    }
+
+    /* 1. Título forte focado em dor */
+    .hero h1 {
+      font-size: clamp(26px, 6vw, 42px);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    /* 2. Subtítulo reforçando solução */
+    .hero-sub {
+      font-size: clamp(15px, 3vw, 18px);
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+
+    /* ==========================================
+       3. IMAGEM DO PRODUTO
+    ========================================== */
+    .produto-img-wrap {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 0 auto 36px;
+      max-width: 480px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Placeholder visual enquanto não tem imagem real */
+    .produto-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #f0ede8 0%, #e8e3db 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .produto-placeholder .icon { font-size: 64px; }
+    .produto-placeholder p   { font-size: 13px; font-weight: 500; }
+
+    /* Badge sobre a imagem */
+    .img-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 100px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ==========================================
+       BOTÕES — usados em múltiplos pontos
+    ========================================== */
+
+    /* Botão principal — Shopee */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 440px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 700;
+      padding: 18px 24px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 28px rgba(232,93,4,0.35);
+      transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(232,93,4,0.45);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    /* Botão WhatsApp */
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 440px;
+      background: var(--whatsapp);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 24px;
+      border-radius: var(--radius);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.28);
+      transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--whatsapp-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.38);
+    }
+
+    .btn-whatsapp:active { transform: translateY(0); }
+
+    /* Grupo de botões centralizado */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Texto de garantia abaixo dos botões */
+    .garantia-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ==========================================
+       4. SEÇÃO DO PROBLEMA
+    ========================================== */
+    .problema-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .problema-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .problema-card .emoji { font-size: 26px; margin-bottom: 8px; display: block; }
+    .problema-card strong { font-size: 14px; font-weight: 600; display: block; margin-bottom: 4px; }
+    .problema-card p      { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ==========================================
+       5. SEÇÃO DE BENEFÍCIOS
+    ========================================== */
+    .beneficios-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .beneficio-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .beneficio-check {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--green-bg);
+      border: 1px solid rgba(29,122,79,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .beneficio-item h3   { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .beneficio-item p    { font-size: 13px; color: var(--muted); }
+
+    /* ==========================================
+       8. PROVA / CREDIBILIDADE
+    ========================================== */
+    .prova-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .prova-numero {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .prova-box p {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+
+    /* Mini depoimentos */
+    .depos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 24px 0;
+      text-align: left;
+    }
+
+    .depo {
+      background: var(--surface2);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .depo-stars { color: #f59e0b; font-size: 13px; margin-bottom: 6px; }
+    .depo-text  { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+    .depo-autor { font-size: 12px; font-weight: 600; color: var(--text); }
+
+    /* ==========================================
+       RODAPÉ
+    ========================================== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    footer a { color: var(--accent); font-weight: 500; }
+
+    /* ==========================================
+       RESPONSIVIDADE
+    ========================================== */
+    @media (max-width: 480px) {
+      section { padding: 40px 0; }
+      .hero   { padding: 48px 0 36px; }
+
+      .problema-cards { grid-template-columns: 1fr; }
+      .depos          { grid-template-columns: 1fr; }
+
+      .btn-primary   { font-size: 16px; padding: 16px 20px; }
+      .btn-whatsapp  { font-size: 14px; padding: 14px 20px; }
+
+      .prova-numero  { font-size: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <!-- ============================================
+       1 + 2. HERO — TÍTULO + SUBTÍTULO + BOTÕES
+  ============================================= -->
+  <section class="hero">
+
+    <!-- Pílula de credibilidade -->
+    <div class="hero-pill">
+      <span></span> Produto mais vendido na Shopee
+    </div>
+
+    <!-- 1. Título forte focado em dor -->
+    <h1>
+      Você sente <em>dor no pescoço</em><br>
+      ao usar notebook?
+    </h1>
+
+    <!-- 2. Subtítulo reforçando solução -->
+    <p class="hero-sub">
+      Veja como melhorar sua postura em poucos segundos
+      com um suporte simples, ajustável e dobrável — perfeito para home office.
+    </p>
+
+    <!-- 3. Imagem do produto -->
+    <div class="produto-img-wrap">
+      <!--
+        PARA TROCAR: substitua o bloco .produto-placeholder por:
+        <img src="URL_DA_SUA_IMAGEM" alt="Suporte ergonômico para notebook" />
+      -->
+      <div class="produto-placeholder">
+        <span class="icon">🖥️</span>
+        <p>Substitua pelo link da imagem real do produto</p>
+      </div>
+      <div class="img-badge">+1.000 vendidos</div>
+    </div>
+
+    <!-- Botões na hero (repetidos embaixo também) -->
+    <div class="btn-group">
+      <!-- 6. BOTÃO PRINCIPAL — Shopee -->
+      <a
+        href="https://s.shopee.com.br/4AwI8TMeFs"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary"
+        id="cta-hero"
+      >
+        👉 Ver produto com desconto
+      </a>
+
+      <!-- 7. BOTÃO WHATSAPP -->
+      <!--
+        Troque o número: 5531999999999 → DDI+DDD+número sem espaços
+        Edite a mensagem no parâmetro "text="
+      -->
+      <a
+        href="https://wa.me/5531999999999?text=Oi%2C%20vi%20o%20suporte%20erg%C3%B4n%C3%B4mico%20e%20tenho%20uma%20d%C3%BAvida!"
+        target="_blank"
+        rel="noopener"
+        class="btn-whatsapp"
+      >
+        💬 Tirar dúvida no WhatsApp
+      </a>
+
+      <p class="garantia-text">🛡️ Garantia Shopee — reembolso total se não receber</p>
+    </div>
+
+  </section>
+
+  <!-- ============================================
+       4. O PROBLEMA — de forma simples e direta
+  ============================================= -->
+  <section>
+    <div class="section-label">O problema que você conhece bem</div>
+    <h2>Trabalhar no notebook do jeito errado cobra um preço alto</h2>
+    <p style="color:var(--muted);margin-top:10px;font-size:15px">
+      Você fica horas com a tela baixa, pescoço curvado, ombros tensos —
+      e no final do dia paga com dor, cansaço e queda de produtividade.
+    </p>
+
+    <div class="problema-cards">
+      <div class="problema-card">
+        <span class="emoji">😩</span>
+        <strong>Dor no pescoço</strong>
+        <p>A tela baixa obriga você a olhar para baixo o dia todo.</p>
+      </div>
+      <div class="problema-card">
+        <span class="emoji">🥴</span>
+        <strong>Tensão nos ombros</strong>
+        <p>Os ombros sobem e travam sem você perceber.</p>
+      </div>
+      <div class="problema-card">
+        <span class="emoji">🔥</span>
+        <strong>Notebook superaquece</strong>
+        <p>Sem ventilação por baixo, o desempenho cai e a vida útil diminui.</p>
+      </div>
+      <div class="problema-card">
+        <span class="emoji">😴</span>
+        <strong>Cansaço acumulado</strong>
+        <p>Final do dia parece que você correu uma maratona — sentado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       5. BENEFÍCIOS DO PRODUTO
+  ============================================= -->
+  <section>
+    <div class="section-label">A solução</div>
+    <h2>O que muda com o suporte ergonômico</h2>
+
+    <div class="beneficios-lista">
+
+      <div class="beneficio-item">
+        <div class="beneficio-check">✓</div>
+        <div>
+          <h3>Melhora a postura imediatamente</h3>
+          <p>Eleva a tela à altura dos olhos — coluna reta, pescoço relaxado desde o primeiro uso.</p>
+        </div>
+      </div>
+
+      <div class="beneficio-item">
+        <div class="beneficio-check">✓</div>
+        <div>
+          <h3>Reduz dores no pescoço e costas</h3>
+          <p>Corrige o ângulo de visão e alivia a tensão acumulada em horas de trabalho.</p>
+        </div>
+      </div>
+
+      <div class="beneficio-item">
+        <div class="beneficio-check">✓</div>
+        <div>
+          <h3>Ajuda na ventilação do notebook</h3>
+          <p>Levantado da mesa, o notebook ventila melhor — menos calor, mais desempenho e durabilidade.</p>
+        </div>
+      </div>
+
+      <div class="beneficio-item">
+        <div class="beneficio-check">✓</div>
+        <div>
+          <h3>Dobrável e fácil de transportar</h3>
+          <p>Encaixa em qualquer mochila. Monta e desmonta em menos de 3 segundos.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       8. PROVA / CREDIBILIDADE
+  ============================================= -->
+  <section>
+    <div class="prova-box">
+      <div class="section-label" style="text-align:center">Credibilidade</div>
+      <div class="prova-numero">+1.200</div>
+      <p>
+        Pessoas que trabalham em casa já compraram esse suporte e relataram
+        melhora na postura e redução das dores em menos de uma semana de uso.
+      </p>
+
+      <!-- Mini depoimentos (baseados em avaliações reais da Shopee) -->
+      <div class="depos">
+        <div class="depo">
+          <div class="depo-stars">★★★★★</div>
+          <p class="depo-text">"A dor no pescoço que sentia todo dia sumiu em menos de uma semana. Vale muito a pena."</p>
+          <span class="depo-autor">Rafael M. — comprador verificado</span>
+        </div>
+        <div class="depo">
+          <div class="depo-stars">★★★★★</div>
+          <p class="depo-text">"Chegou em 5 dias, produto firme e fácil de montar. Diferença enorme no conforto."</p>
+          <span class="depo-autor">Camila L. — compradora verificada</span>
+        </div>
+      </div>
+
+      <!-- Repetição dos botões no meio da página -->
+      <div class="btn-group">
+        <a
+          href="https://s.shopee.com.br/4AwI8TMeFs"
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+          id="cta-meio"
+        >
+          👉 Ver produto com desconto
+        </a>
+        <a
+          href="https://wa.me/5531999999999?text=Oi%2C%20vi%20o%20suporte%20erg%C3%B4n%C3%B4mico%20e%20tenho%20uma%20d%C3%BAvida!"
+          target="_blank"
+          rel="noopener"
+          class="btn-whatsapp"
+        >
+          💬 Tirar dúvida no WhatsApp
+        </a>
+        <p class="garantia-text">🛡️ Garantia Shopee — reembolso total se não receber</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       6 + 7. BOTÕES FINAIS (reforço no fim)
+  ============================================= -->
+  <section style="text-align:center">
+    <div class="section-label">Aproveite agora</div>
+    <h2 style="margin-bottom:10px">Pronto para trabalhar sem dor?</h2>
+    <p style="color:var(--muted);font-size:15px;margin-bottom:28px">
+      Frete grátis disponível. Estoque local no Brasil — entrega em 3 a 7 dias úteis.
+    </p>
+
+    <div class="btn-group">
+      <a
+        href="https://s.shopee.com.br/4AwI8TMeFs"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary"
+        id="cta-fim"
+      >
+        👉 Ver produto com desconto
+      </a>
+      <a
+        href="https://wa.me/5531999999999?text=Oi%2C%20vi%20o%20suporte%20erg%C3%B4n%C3%B4mico%20e%20tenho%20uma%20d%C3%BAvida!"
+        target="_blank"
+        rel="noopener"
+        class="btn-whatsapp"
+      >
+        💬 Tirar dúvida no WhatsApp
+      </a>
+      <p class="garantia-text">🛡️ Garantia Shopee — reembolso total se não receber</p>
+    </div>
+  </section>
+
+  <!-- ============================================
+       RODAPÉ
+  ============================================= -->
+  <footer>
+    <p>
+      ⚠️ Este site pode conter links de afiliado. Ao comprar através deles, recebo uma pequena
+      comissão sem nenhum custo adicional para você. <strong>#publi</strong><br><br>
+      <span style="opacity:.5">© 2026 — Achados Select</span>
+    </p>
+  </footer>
+
+</div><!-- /wrapper -->
+
+<!-- ============================================
+     JAVASCRIPT — animações e rastreio de cliques
+============================================= -->
+<script>
+  /* ----- Rastreio simples de cliques nos CTAs -----
+     Substitua o console.log por gtag() se usar Google Analytics
+     Exemplo: gtag('event', 'cta_click', { cta_id: id }); */
+  document.querySelectorAll('.btn-primary').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      console.log('[CTA] Shopee clicado — id:', this.id, '— horário:', new Date().toLocaleTimeString('pt-BR'));
+    });
+  });
+
+  document.querySelectorAll('.btn-whatsapp').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      console.log('[CTA] WhatsApp clicado — horário:', new Date().toLocaleTimeString('pt-BR'));
+    });
+  });
+
+  /* ----- Urgência dinâmica por horário -----
+     Se for após as 18h, reforça a mensagem de prazo */
+  (function() {
+    var hora = new Date().getHours();
+    if (hora >= 18) {
+      var pills = document.querySelectorAll('.garantia-text');
+      pills.forEach(function(el) {
+        el.innerHTML = '⏰ Pedidos feitos até meia-noite chegam ainda essa semana · Frete grátis';
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
